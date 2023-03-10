@@ -40,7 +40,7 @@ jobs:
 
      - name: Get Folders
        if: runner.os == 'macOS'
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PyQt6
+       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PyQt6/Qt6
        run: |
              ls
     
@@ -49,7 +49,13 @@ jobs:
        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PyQt6/Qt6
        run: |
          mkdir resources
-
+  
+     - name: MacOS build workaround 2
+       if: runner.os == 'macOS'
+       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PyQt6/Qt6
+       run: |
+         mkdir libexec
+  
      - name: Build Executable
        uses: Nuitka/Nuitka-Action@v0.4
        with:
