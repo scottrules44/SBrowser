@@ -31,8 +31,8 @@ jobs:
          cache-dependency-path: |
             **/requirements*.txt
 
-    - name: Install Dependencies
-        run: |
+     - name: Install Dependencies
+       run: |
           pip install -r requirements.txt
 
      - name: Build Executable
