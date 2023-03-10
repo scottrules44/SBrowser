@@ -41,7 +41,10 @@ jobs:
      - name: Install PySide6
        run: |
           pip install pyside6
-
+     - name: Open Web Client Directory
+       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages
+       run: |
+         ls -la
      - name: Build Executable
        uses: Nuitka/Nuitka-Action@v0.4
        with:
