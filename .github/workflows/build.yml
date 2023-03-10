@@ -42,7 +42,7 @@ jobs:
        run: |
           pip install pyside6
      - name: Open Web Client Directory
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages
+       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
        run: |
          ls -la
      - name: Build Executable
