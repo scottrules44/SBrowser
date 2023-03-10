@@ -39,7 +39,7 @@ jobs:
           pip install -r requirements.txt
 
      - name: Install PySide6
-        run: |
+       run: |
           pip install pyside6
 
      - name: Build Executable
