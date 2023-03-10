@@ -1,7 +1,7 @@
-from PySide6.QtWidgets import *
-from PySide6.QtCore import *
-from PySide6.QtGui import *
-from PySide6.QtWebEngineWidgets import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWebEngineWidgets import *
 
 startPage = "https://google.com"
 
@@ -19,19 +19,19 @@ class SBrowser(QMainWindow):
         self.urlBar = QLineEdit()
         self.urlBar.setMinimumHeight(30)
         self.urlBar.setPlaceholderText("Website Url or Search Param")
-        
 
-        self.goButton = QPushButton("Go")     
+
+        self.goButton = QPushButton("Go")
         self.goButton.setMinimumHeight(30)
 
-        self.reloadButton = QPushButton()     
+        self.reloadButton = QPushButton()
         self.reloadButton.setIcon(QIcon("assets/refresh.png"))
         self.reloadButton.setIconSize(QSize(10,10))
         self.reloadButton.setMinimumHeight(30)
 
-        self.backButton = QPushButton("<")     
+        self.backButton = QPushButton("<")
         self.backButton.setMinimumHeight(30)
-        self.fwdButton = QPushButton(">")     
+        self.fwdButton = QPushButton(">")
         self.fwdButton.setMinimumHeight(30)
 
         self.horizontal.addWidget(self.urlBar)
@@ -62,8 +62,8 @@ class SBrowser(QMainWindow):
 
         self.shortcut = QShortcut(QKeySequence("Return"), self.window)
         self.shortcut.activated.connect(self.enterButton)
-        
-        
+
+
         self.window.setLayout(self.layout)
         self.window.show()
 
@@ -73,7 +73,7 @@ class SBrowser(QMainWindow):
             QApplication.focusWidget().clearFocus()
             self.navigate(self.urlBar.text())
 
-    
+
     def pageFinished(self):
         self.backButton.setHidden(not self.browser.history().canGoBack())
         self.fwdButton.setHidden(not self.browser.history().canGoForward())
@@ -84,8 +84,8 @@ class SBrowser(QMainWindow):
             self.urlBar.setText(url)
         self.browser.setUrl(QUrl(url))
         self.pageFinished()
-        
-        
+
+
 
 app = QApplication([])
 window = SBrowser()

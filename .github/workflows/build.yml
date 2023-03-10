@@ -37,25 +37,25 @@ jobs:
        run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      
+
      - name: Get Folders
        if: runner.os == 'macOS'
        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages
        run: |
              ls
-         
+
      - name: MacOS build workaround
        if: runner.os == 'macOS'
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
+       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PyQt6/Qt
        run: |
          mkdir resources
-     
+
      - name: Build Executable
        uses: Nuitka/Nuitka-Action@v0.4
        with:
          script-name: main.py
          standalone: true
-         enable-plugins: pyside6
+         enable-plugins: pyqt6
          disable-console: false
 
      - name: Upload Artifacts
