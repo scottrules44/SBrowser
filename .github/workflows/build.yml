@@ -38,14 +38,12 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-     - name: Install PySide6
-       run: |
-          pip install pyside6
-     - name: Open Web Client Directory
+     - name: MacOS build workaround
+       if: runner.os == 'macOS'
        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
        run: |
          mkdir resources
-         ls -la
+     
      - name: Build Executable
        uses: Nuitka/Nuitka-Action@v0.4
        with:
