@@ -26,12 +26,12 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          python3 -m venv packenv
+          source packenv/bin/activate
           pip3 install PyInstaller
-          pip3 install --upgrade PyInstaller pyinstaller-hooks-contrib
           pip3 install PyQt6
           pip3 install PyQt6-WebEngine
           pyinstaller --windowed main.py
-          pip freeze
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
