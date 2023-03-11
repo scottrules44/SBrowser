@@ -41,6 +41,7 @@ jobs:
 
       - name: Install Dependencies
         run: |
+          brew install pyqt5
           pip3 install PyQt5
           pip3 install PyQtWebEngine
 
