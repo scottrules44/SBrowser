@@ -31,19 +31,13 @@ jobs:
           pip3 install PyInstaller
           pip3 install PyQt6
           pip3 install PyQt6-WebEngine
-          pyinstaller --windowed main.py
+          pyinstaller main.py
           
       - name: Compress Mac App
         uses: vimtor/action-zip@v1
         with:
           files: dist/main.app
           dest: mac.zip
-          
-      - name: check files
-        run: |
-          ls
-          cd dist
-          ls
       
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
