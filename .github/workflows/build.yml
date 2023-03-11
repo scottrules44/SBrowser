@@ -12,53 +12,54 @@ on:
        default: '99999.0'
 
 jobs:
- build:
-   strategy:
-     fail-fast: false
-     matrix:
-       os: [macos-latest, windows-latest]
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
 
-   runs-on: ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
 
-   steps:
-     - name: Check-out repository
-       uses: actions/checkout@v3
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@v3
 
-     - name: Setup Python
-       uses: actions/setup-python@v4.2.0
-       with:
-         python-version: '3.10' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-         architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
-         cache: 'pip'
+      - name: Setup Python
+        uses: actions/setup-python@v4.2.0
+        with:
+          python-version: '3.10' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+          cache: 'pip'
 
-     - name: Install Dependencies
-       run: |
-          pip install PyQt6
-          pip install PyQt6-WebEngine
+      - name: Get Folders
+        if: runner.os == 'macOS'
+        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages
+        run: |
+          /usr/bin/python3 -m venv env
+          source env/bin/activate
+          pip install --upgrade pip
 
-     - name: Get Folders
-       if: runner.os == 'macOS'
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages
-       run: |
-             ls
-     - name: MacOS build workaround
-       if: runner.os == 'macOS'
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
-       run: |
-         mkdir resources
-     - name: Build Executable
-       uses: Nuitka/Nuitka-Action@v0.4
-       with:
-         script-name: main.py
-         standalone: true
-         enable-plugins: pyqt6
-         disable-console: false
+      - name: Install Dependencies
+        run: |
+          pip install PyQt5
+      - name: MacOS build workaround
+        if: runner.os == 'macOS'
+        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
+        run: |
+          mkdir resources
+      - name: Build Executable
+        uses: Nuitka/Nuitka-Action@v0.4
+        with:
+          script-name: main.py
+          standalone: true
+          enable-plugins: pyqt5
+          disable-console: false
 
-     - name: Upload Artifacts
-       uses: actions/upload-artifact@v3
-       with:
-         name: ${{ runner.os }} Build
-         path: |
-           build/*.exe
-           build/*.bin
-           build/*.app/**/*
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }} Build
+          path: |
+            build/*.exe
+            build/*.bin
+            build/*.app/**/*
