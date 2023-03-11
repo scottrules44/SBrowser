@@ -41,7 +41,9 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install QtWebEngineWidgets
+          pip install PyQt5
+          pip install PyQt5-sip
+          pip install PyQtWebEngine
           
 
       - name: Build Executable
