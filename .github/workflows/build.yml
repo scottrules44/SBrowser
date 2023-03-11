@@ -40,6 +40,7 @@ jobs:
         working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
         run: |
           mkdir resources
+          mkdir libexec
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
