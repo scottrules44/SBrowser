@@ -30,31 +30,17 @@ jobs:
          python-version: '3.10' # Version range or exact version of a Python version to use, using SemVer's version range syntax
          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
          cache: 'pip'
-         cache-dependency-path: |
-            **/requirements*.txt
 
      - name: Install Dependencies
        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install PyQt5
+          pip install PyQt6-WebEngine
 
      - name: Get Folders
        if: runner.os == 'macOS'
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/pip
+       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages
        run: |
              ls
-
-     - name: MacOS build workaround
-       if: runner.os == 'macOS'
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PyQt5/Qt5
-       run: |
-         mkdir resources
-
-     - name: MacOS build workaround 2
-       if: runner.os == 'macOS'
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PyQt5/Qt5
-       run: |
-         mkdir libexec
 
      - name: Build Executable
        uses: Nuitka/Nuitka-Action@v0.4
