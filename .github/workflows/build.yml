@@ -33,8 +33,8 @@ jobs:
 
      - name: Install Dependencies
        run: |
-          pip install PyQt5
-          pip install PyQt6-WebEngine
+          pip install PySide6
+
      - name: Get Folders
        if: runner.os == 'macOS'
        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages
@@ -45,7 +45,7 @@ jobs:
        with:
          script-name: main.py
          standalone: true
-         enable-plugins: pyqt5
+         enable-plugins: pyqt6
          disable-console: false
 
      - name: Upload Artifacts
