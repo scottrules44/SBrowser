@@ -42,6 +42,7 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install PyQt5
+          pip install PyQtWebEngine
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
