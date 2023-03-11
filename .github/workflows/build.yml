@@ -34,7 +34,9 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install PySide6
+          pip install PyQt6-WebEngine
           pip3 install PySide6
+          pip3 install PyQt6-WebEngine
           pip3 install Pillow
           pip freeze
           
@@ -42,7 +44,6 @@ jobs:
         uses: Nuitka/Nuitka-Action@v0.4
         with:
           script-name: main.py
-          standalone: true
           enable-plugins: pyside6
           disable-console: false
 
