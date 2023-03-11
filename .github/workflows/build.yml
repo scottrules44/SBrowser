@@ -40,7 +40,20 @@ jobs:
         working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
         run: |
           mkdir resources
-          mkdir libexec
+          python -c "from PySide6 import __version__; from PySide6.QtCore import qVersion; print(f'PySide6 version: {__version__}, Qt version: {qVersion()}')"
+          ls libexec
+
+      - name: MacOS build workaround 2
+        if: runner.os == 'macOS'
+        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib
+        run: |
+          ls
+
+      - name: MacOS build workaround 3
+        if: runner.os == 'macOS'
+        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10
+        run: |
+          ls
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
