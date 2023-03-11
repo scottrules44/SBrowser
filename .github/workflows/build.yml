@@ -46,7 +46,7 @@ jobs:
        with:
          script-name: main.py
          standalone: true
-         enable-plugins: pyqt6
+         enable-plugins: pyside6
          disable-console: false
 
      - name: Upload Artifacts
