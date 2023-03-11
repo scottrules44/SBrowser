@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, windows-latest]
+        os: [macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -24,34 +24,18 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4.2.0
-        with:
-          python-version: '3.10' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
-          cache: 'pip'
-
       - name: Install Dependencies
         run: |
-          pip install PySide6
-          pip install PyQt6-WebEngine
-          pip3 install PySide6
+          pip3 install PyInstaller
+          pip3 install --upgrade PyInstaller pyinstaller-hooks-contrib
+          pip3 install PyQt6
           pip3 install PyQt6-WebEngine
-          pip3 install Pillow
+          pyinstaller --windowed main.py
           pip freeze
-          
-      - name: Build Executable
-        uses: Nuitka/Nuitka-Action@v0.4
-        with:
-          script-name: main.py
-          enable-plugins: pyside6
-          disable-console: false
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} Build
           path: |
-            build/*.exe
-            build/*.bin
-            build/*.app/**/*
+            dist/*.app/**/*
