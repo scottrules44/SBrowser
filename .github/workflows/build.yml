@@ -40,7 +40,7 @@ jobs:
 
      - name: Get Folders
        if: runner.os == 'macOS'
-       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
+       working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages
        run: |
              ls
 
