@@ -34,7 +34,7 @@ jobs:
      - name: Install Dependencies
        run: |
           pip install PyQt5
-          pip install PyQt6-WebEngine
+          pip install PyQtWebEngine
 
      - name: Get Folders
        if: runner.os == 'macOS'
