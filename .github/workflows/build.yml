@@ -33,7 +33,7 @@ jobs:
 
      - name: Install Dependencies
        run: |
-          pip install PySide6
+          pip install PyQt6
           pip install PyQt6-WebEngine
 
      - name: Get Folders
@@ -46,7 +46,7 @@ jobs:
        with:
          script-name: main.py
          standalone: true
-         enable-plugins: pyside6
+         enable-plugins: pyqt6
          disable-console: false
 
      - name: Upload Artifacts
