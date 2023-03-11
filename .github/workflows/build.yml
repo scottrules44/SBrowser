@@ -51,4 +51,3 @@ jobs:
           name: ${{ runner.os }} Build
           path: |
             mac.zip
-            dist/*.app/**/*
