@@ -37,12 +37,12 @@ jobs:
         run: |
           /usr/bin/python3 -m venv env
           source env/bin/activate
-          pip install --upgrade pip
+          pip3 install --upgrade pip 
 
       - name: Install Dependencies
         run: |
-          pip install PyQt5
-          pip install PyQtWebEngine
+          pip3 install PyQt5
+          pip3 install PyQtWebEngine
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
