@@ -41,7 +41,8 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          brew install pyqt5
+          pip install QtWebEngineWidgets
+          
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
