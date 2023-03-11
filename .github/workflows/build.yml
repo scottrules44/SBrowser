@@ -33,14 +33,17 @@ jobs:
 
       - name: Install Dependencies
         run: |
-          pip install PySide6
+          pip install PyQt6-WebEngine
+          pip3 install PyQt6-WebEngine
+          pip3 install Pillow
+          pip3 install PyQt6-WebEngine
+          pip freeze
           
       - name: MacOS build workaround
         if: runner.os == 'macOS'
         working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
         run: |
           mkdir resources
-          python -c "from PySide6 import __version__; from PySide6.QtCore import qVersion; print(f'PySide6 version: {__version__}, Qt version: {qVersion()}')"
           ls libexec
 
       - name: MacOS build workaround 2
