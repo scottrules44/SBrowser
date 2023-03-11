@@ -34,6 +34,12 @@ jobs:
       - name: Install Dependencies
         run: |
           pip install PySide6
+          
+      - name: MacOS build workaround
+        if: runner.os == 'macOS'
+        working-directory: /Users/runner/hostedtoolcache/Python/3.10.10/x64/lib/python3.10/site-packages/PySide6/Qt
+        run: |
+          mkdir resources
 
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@v0.4
