@@ -30,8 +30,7 @@ jobs:
           source packenv/bin/activate
           pip3 install PyInstaller
           pip3 install PyQt6
-          pip3 install PyQt6-WebEngine
-          pyinstaller --windowed main.py
+          pyinstaller --onefile --windowed main.py
         
       - name: List files
         run: |
@@ -40,7 +39,7 @@ jobs:
       - name: Compress Mac App
         uses: vimtor/action-zip@v1
         with:
-          files: dist/main.app
+          files: dist
           dest: mac.zip
       
       - name: Upload Artifacts
