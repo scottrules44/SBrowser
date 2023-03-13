@@ -32,15 +32,14 @@ jobs:
           pip3 install PyQt6
           pip3 install PyQt6-WebEngine
           pyinstaller --onefile --windowed main.py
-          echo $MACOS_CERTIFICATE 
       
       - name: Codesign executable
         env: 
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
           MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
         run: |
-          echo $MACOS_CERTIFICATE
-          echo $MACOS_CERTIFICATE | base64 —d > certificate.p12
+          echo QWxhZGRpbjpvcGVuIHNlc2FtZQ== | base64 -d
+          echo $MACOS_CERTIFICATE | base64 -d > certificate.p12
           security create-keychain -p <your-password> build.keychain
           security default-keychain -s build.keychain
           security unlock-keychain -p <your-password> build.keychain
