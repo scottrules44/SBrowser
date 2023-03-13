@@ -39,10 +39,15 @@ jobs:
           MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
           MACOS_DEV_ID: ${{ secrets.MACOS_DEV_ID }}
         run: |
+          echo "test123"
           security create-keychain -p $MACOS_CERTIFICATE_PWD build.keychain
+          echo "test124"
           security default-keychain -s build.keychain
+          echo "test125"
           security unlock-keychain -p  "$MACOS_CERTIFICATE_PWD" build.keychain
+          echo "test126"
           security import certificate.p12 -k build.keychain -P "$MACOS_CERTIFICATE_PWD" -T /usr/bin/codesign
+          echo "test127"
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k  "$MACOS_CERTIFICATE_PWD" build.keychain
           /usr/bin/codesign --force -s "$MACOS_DEV_ID" dist/main.app -v
 
