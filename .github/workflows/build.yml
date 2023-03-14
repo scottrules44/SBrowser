@@ -48,7 +48,7 @@ jobs:
           echo "test125"
           security unlock-keychain -p  testpassword build.keychain
           echo "test126"
-          security import certificate.p12 -k build.keychain -P "powerade1" -T /usr/bin/codesign
+          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           echo "test127"
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k testpassword build.keychain
           /usr/bin/codesign --force -s "$MACOS_DEV_ID" dist/main.app -v
