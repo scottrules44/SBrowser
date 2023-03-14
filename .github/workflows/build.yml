@@ -40,7 +40,7 @@ jobs:
           MACOS_DEV_ID: ${{ secrets.MACOS_DEV_ID }}
         run: |
           echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          ls
+          ls -lh
           echo "test123"
           security create-keychain -p testpassword build.keychain
           echo "test124"
