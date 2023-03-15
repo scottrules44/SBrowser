@@ -31,7 +31,7 @@ jobs:
           pip3 install PyInstaller
           pip3 install PyQt6
           pip3 install PyQt6-WebEngine
-          pyinstaller --onefile --windowed main.py
+          pyinstaller --onefile --windowed --target-arch universal2 main.py
       
       - name: Codesign executable
         env: 
