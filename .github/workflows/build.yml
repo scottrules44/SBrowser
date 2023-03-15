@@ -30,7 +30,7 @@ jobs:
           source packenv/bin/activate
           pip3 install PyInstaller
           pip3 install PyQt6
-          pyinstaller --onefile --windowed --target-arch universal2 main.py
+          pyinstaller --windowed --target-arch universal2 main.py
       
       - name: Codesign executable
         env: 
