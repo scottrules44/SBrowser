@@ -1,6 +1,7 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
+from PyQt6.QtWebEngineWidgets import *
 
 startPage = "https://google.com"
 
@@ -38,16 +39,25 @@ class SBrowser(QMainWindow):
         self.horizontal.addWidget(self.backButton)
         self.horizontal.addWidget(self.fwdButton)
 
+        self.browser = QWebEngineView()
+        self.browser.setUrl(QUrl(startPage))
+        self.browser.loadFinished.connect(self.pageFinished)
+
         self.goButton.clicked.connect(lambda: self.navigate(self.urlBar.text()))
+        self.reloadButton.clicked.connect(self.browser.reload)
+        self.fwdButton.clicked.connect(self.browser.forward)
+        self.backButton.clicked.connect(self.browser.back)
 
         self.backButton.setHidden(True)
         self.fwdButton.setHidden(True)
 
         self.layout.addLayout(self.horizontal)
+        self.layout.addWidget(self.browser)
         self.layout.setContentsMargins(5, 1, 5, 5)
 
         #Keyboard shortcuts
         self.shortcut = QShortcut(QKeySequence("Ctrl+R"), self.window)
+        self.shortcut.activated.connect(self.browser.reload)
 
         self.shortcut = QShortcut(QKeySequence("Return"), self.window)
         self.shortcut.activated.connect(self.enterButton)
@@ -64,12 +74,14 @@ class SBrowser(QMainWindow):
 
 
     def pageFinished(self):
-        print("run123")
+        self.backButton.setHidden(not self.browser.history().canGoBack())
+        self.fwdButton.setHidden(not self.browser.history().canGoForward())
 
     def navigate(self, url):
         if not url.startswith("https"):
             url = "https://" + url
             self.urlBar.setText(url)
+        self.browser.setUrl(QUrl(url))
         self.pageFinished()
 
 
