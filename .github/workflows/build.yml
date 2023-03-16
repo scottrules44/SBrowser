@@ -24,11 +24,6 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: Set up Python 3.11.2
-        uses: actions/setup-python@v4
-        with:
-          python-version: 3.11.2
-
       - name: Install Dependencies
         run: |
           python3 -m venv packenv
@@ -36,21 +31,7 @@ jobs:
           pip3 install --upgrade pip
           pip3 install PyInstaller
           pip3 install tk
-          pyinstaller --onefile --windowed --target-arch universal2 main.py
-      
-      - name: Codesign executable
-        env: 
-          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
-          MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
-          MACOS_DEV_ID: ${{ secrets.MACOS_DEV_ID }}
-        run: |
-          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p testpassword build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p  testpassword build.keychain
-          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k testpassword build.keychain
-          /usr/bin/codesign --force -s "$MACOS_DEV_ID" dist/main.app -v
+          pyinstaller --windowed --target-arch universal2 main.py
           
       - name: Compress Mac App
         uses: vimtor/action-zip@v1
