@@ -33,8 +33,7 @@ jobs:
         run: |
           python3 -m venv packenv
           source packenv/bin/activate
-          pip3 install PyInstaller
-          pip3 install PyQt6
+          pip3 install tk
           pyinstaller --onefile --windowed --target-arch universal2 main.py
       
       - name: Codesign executable
@@ -44,12 +43,10 @@ jobs:
           MACOS_DEV_ID: ${{ secrets.MACOS_DEV_ID }}
         run: |
           echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          ls -lh
           security create-keychain -p testpassword build.keychain
           security default-keychain -s build.keychain
           security unlock-keychain -p  testpassword build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
-          echo "test127"
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k testpassword build.keychain
           /usr/bin/codesign --force -s "$MACOS_DEV_ID" dist/main.app -v
 
