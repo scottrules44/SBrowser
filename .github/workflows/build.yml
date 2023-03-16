@@ -34,6 +34,7 @@ jobs:
           python3 -m venv packenv
           source packenv/bin/activate
           pip3 install --upgrade pip
+          pip3 install PyInstaller
           pip3 install tk
           pyinstaller --onefile --windowed --target-arch universal2 main.py
       
