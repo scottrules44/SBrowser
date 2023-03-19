@@ -24,10 +24,11 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: Set up Python 3.11.2
+      - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.11.2
+          python-version: '3.10' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
 
       - name: Install Dependencies
         run: |
@@ -35,32 +36,21 @@ jobs:
           source packenv/bin/activate
           pip3 install --upgrade pip
           pip3 install PyInstaller
-          pip3 install tk
-          pyinstaller --onefile --windowed --target-arch universal2 main.py
-      
-      - name: Codesign executable
-        env: 
-          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
-          MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
-          MACOS_DEV_ID: ${{ secrets.MACOS_DEV_ID }}
-        run: |
-          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p testpassword build.keychain
-          security default-keychain -s build.keychain
-          security unlock-keychain -p  testpassword build.keychain
-          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
-          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k testpassword build.keychain
-          /usr/bin/codesign --force -s "$MACOS_DEV_ID" dist/main.app -v
-          
-      - name: Compress Mac App
-        uses: vimtor/action-zip@v1
+          pip3 install PyQt6
+
+      - Name: Build Executable
+        uses: Nuitka/Nuitka-Action@main
         with:
-          files: dist
-          dest: mac.zip
-      
+          nuitka-version: main
+          script-name: main
+          enable-plugins: pyqt6
+          onefile: true
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} Build
           path: |
-            mac.zip
+            build/*.exe
+            build/*.bin
+            build/*.app/**/*
