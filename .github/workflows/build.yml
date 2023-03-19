@@ -38,7 +38,7 @@ jobs:
           pip3 install PyInstaller
           pip3 install PyQt6
 
-      - Name: Build Executable
+      - name: Build Executable
         uses: Nuitka/Nuitka-Action@main
         with:
           nuitka-version: main
