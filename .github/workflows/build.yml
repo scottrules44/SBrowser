@@ -44,6 +44,7 @@ jobs:
           macos-create-app-bundle: true
           script-name: main.py
           enable-plugins: pyqt6
+          standalone: true
           onefile: true
           
       - name: check files
