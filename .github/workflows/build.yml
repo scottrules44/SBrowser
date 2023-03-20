@@ -24,42 +24,42 @@ jobs:
       - name: Check-out repository
         uses: actions/checkout@v3
 
-      - name: Setup Python
-        uses: actions/setup-python@v4.2.0
-        with:
-          python-version: '3.10' # Version range or exact version of a Python version to use, using SemVer's version range syntax
-          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
-          cache: 'pip'
-          cache-dependency-path: |
-            **/requirements*.txt
-
       - name: Install Dependencies
         run: |
-          pip install -r requirements.txt
-
-      - name: Build Executable
-        uses: Nuitka/Nuitka-Action@main
-        with:
-          nuitka-version: main
-          macos-create-app-bundle: true
-          script-name: main.py
-          enable-plugins: pyqt6
-          standalone: true
-          disable-console: true
-          onefile: true
-          
-      - name: check files
+          python3 -m venv packenv
+          source packenv/bin/activate
+          pip3 install PyInstaller
+          pip3 install PyQt6
+          pip3 install PyQt6-WebEngine
+          pyinstaller --onefile --target-arch universal2 main.py
+      
+      - name: Codesign executable
+        env: 
+          MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
+          MACOS_CERTIFICATE_PWD: ${{ secrets.MACOS_CERTIFICATE_PWD }}
+          MACOS_DEV_ID: ${{ secrets.MACOS_DEV_ID }}
+        run: |
+          echo $MACOS_CERTIFICATE | base64 --decode > certificate.p12
+          ls -lh
+          security create-keychain -p testpassword build.keychain
+          security default-keychain -s build.keychain
+          security unlock-keychain -p  testpassword build.keychain
+          security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k testpassword build.keychain
+          /usr/bin/codesign --force -s "$MACOS_DEV_ID" dist/main.app -v
+      - name: List files
         run: |
           ls
-          cd build
-          echo "///"
-          ls
-
+          
+      - name: Compress Mac App
+        uses: vimtor/action-zip@v1
+        with:
+          files: dist
+          dest: mac.zip
+      
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} Build
           path: |
-            build/*.exe
-            build/*.bin
-            build/*.app/**/*
+            mac.zip
