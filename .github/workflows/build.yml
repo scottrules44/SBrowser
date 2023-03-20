@@ -45,6 +45,13 @@ jobs:
           script-name: main.py
           enable-plugins: pyqt6
           onefile: true
+          
+      - name: check files
+        run: |
+          ls
+          cd build
+          echo "///"
+          ls
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
