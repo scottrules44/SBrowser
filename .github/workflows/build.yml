@@ -45,6 +45,7 @@ jobs:
           script-name: main.py
           enable-plugins: pyqt6
           standalone: true
+          disable-console: true
           onefile: true
           
       - name: check files
