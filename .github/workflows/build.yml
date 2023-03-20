@@ -41,6 +41,7 @@ jobs:
         uses: Nuitka/Nuitka-Action@main
         with:
           nuitka-version: main
+          macos-create-app-bundle: true
           script-name: main.py
           enable-plugins: pyqt6
           onefile: true
