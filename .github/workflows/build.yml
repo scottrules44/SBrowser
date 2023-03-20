@@ -31,9 +31,7 @@ jobs:
           pip3 install PyInstaller
           pip3 install PyQt6
           pip3 install PyQt6-WebEngine
-          pyinstaller --onefile --target-arch universal2 main.py
-          cd build
-          ls
+          pyinstaller --target-arch universal2 main.py
           
       - name: Compress Mac App
         uses: vimtor/action-zip@v1
