@@ -29,9 +29,8 @@ jobs:
           python3 -m venv packenv
           source packenv/bin/activate
           pip3 install PyInstaller
-          pip3 install PyQt5
-          pip3 install PyQtWebEngine
-          export PATH="/opt/homebrew/opt/qt5/bin:$PATH"
+          pip3 install PyQt6
+          pip3 install PyQt6-WebEngine
           pyinstaller --windowed main.py
           
       - name: Compress Mac App
