@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [self-hosted]
+        os: [macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -29,7 +29,8 @@ jobs:
           python3 -m venv packenv
           source packenv/bin/activate
           pip3 install PyInstaller
-          brew install pyqt@5
+          pip3 install PyQt5
+          pip3 install PyQtWebEngine
           export PATH="/opt/homebrew/opt/qt5/bin:$PATH"
           pyinstaller --windowed main.py
           
