@@ -29,8 +29,8 @@ jobs:
           python3 -m venv packenv
           source packenv/bin/activate
           pip3 install PyInstaller
-          pip3 install PyQt6
-          pip3 install PyQt6-WebEngine
+          pip3 install PySide6-Essentials
+          pip3 install PySide6-Addons
           pyinstaller --windowed main.py
           
       - name: Compress Mac App
