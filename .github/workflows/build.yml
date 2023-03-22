@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [self-hosted]
+        os: [macos-latest]
 
     runs-on: ${{ matrix.os }}
 
@@ -31,7 +31,7 @@ jobs:
           pip3 install PyInstaller
           pip3 install PyQt6
           pip3 install PyQt6-WebEngine
-          pyinstaller --windowed main.py
+          pyinstaller --windowed --onedir main.py
           
       - name: Compress Mac App
         uses: vimtor/action-zip@v1
