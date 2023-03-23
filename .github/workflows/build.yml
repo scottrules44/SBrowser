@@ -21,27 +21,30 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     steps:
-      - name: Check-out repository
-        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10' # Version range or exact version of a Python version to use, using SemVer's version range syntax
+          architecture: 'x64' # optional x64 or x86. Defaults to x64 if not specified
+          cache: 'pip'
+          cache-dependency-path: |
+            **/requirements*.txt
 
       - name: Install Dependencies
         run: |
-          python3 -m venv packenv
-          source packenv/bin/activate
-          pip3 install PyInstaller
-          pip3 install PyQt6
-          pip3 install PyQt6-WebEngine
-          pyinstaller --windowed --onedir main.py
-          
-      - name: Compress Mac App
-        uses: vimtor/action-zip@v1
+          pip install -r requirements.txt
+
+      - Name: Build Executable
+        uses: Nuitka/Nuitka-Action@main
         with:
-          files: dist
-          dest: mac.zip
-      
+          nuitka-version: main
+          script-name: main.py
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
         with:
           name: ${{ runner.os }} Build
           path: |
-            mac.zip
+            build/*.exe
+            build/*.bin
+            build/*.app/**/*
