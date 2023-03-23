@@ -78,6 +78,7 @@ jobs:
           # Finally, we need to "attach the staple" to our executable, which will allow our app to be
           # validated by macOS even when an internet connection is not available.
           echo "Attach staple"
+          /usr/bin/xattr -rc "build/main.app"
           xcrun stapler staple "build/main.app"
 
       - name: Upload Artifacts
