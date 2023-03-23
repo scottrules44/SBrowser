@@ -56,7 +56,7 @@ jobs:
           security unlock-keychain -p  testpassword build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k testpassword build.keychain
-          /usr/bin/codesign --force -s "$MACOS_DEV_ID" build/main.app -v
+          /usr/bin/codesign --force --deep -s "$MACOS_DEV_ID" build/main.app -v
       - name: "Notarize app bundle"
         env:
           PROD_MACOS_NOTARIZATION_APPLE_ID: ${{ secrets.MACOS_NOTARIZATION_APPLE_ID }}
