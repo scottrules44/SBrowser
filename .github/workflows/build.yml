@@ -39,6 +39,7 @@ jobs:
         with:
           nuitka-version: main
           script-name: main.py
+          enable-plugins: pyqt6
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
