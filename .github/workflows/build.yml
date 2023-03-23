@@ -79,7 +79,13 @@ jobs:
           # validated by macOS even when an internet connection is not available.
           echo "Attach staple"
           /usr/bin/xattr -rc "build/main.app"
-          xcrun stapler staple "build/main.app"
+
+      - name: Clean App
+        run: |
+          cd build
+          xattr -cr *
+          cd main.app/Contents/MacOS
+          chmod +x *
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
