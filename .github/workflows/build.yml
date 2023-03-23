@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      
+
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -41,7 +41,8 @@ jobs:
         with:
           nuitka-version: main
           script-name: main.py
-          enable-plugins: pyqt6
+          enable-plugins: pyside6
+          macos-create-app-bundle: true
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
