@@ -43,7 +43,7 @@ jobs:
           script-name: main.py
           enable-plugins: pyside6
           disable-console: true
-          
+
       - name: Codesign executable
         env: 
           MACOS_CERTIFICATE: ${{ secrets.MACOS_CERTIFICATE }}
@@ -56,7 +56,7 @@ jobs:
           security unlock-keychain -p  testpassword build.keychain
           security import certificate.p12 -k build.keychain -P $MACOS_CERTIFICATE_PWD -T /usr/bin/codesign
           security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k testpassword build.keychain
-          /usr/bin/codesign --force -s "$MACOS_DEV_ID" dist/main.app -v
+          /usr/bin/codesign --force -s "$MACOS_DEV_ID" build/main.app -v
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
