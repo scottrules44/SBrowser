@@ -42,7 +42,7 @@ jobs:
           nuitka-version: main
           script-name: main.py
           enable-plugins: pyside6
-          macos-create-app-bundle: true
+          disable-console: true
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
