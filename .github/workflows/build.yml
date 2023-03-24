@@ -80,12 +80,9 @@ jobs:
           echo "Attach staple"
           /usr/bin/xattr -rc "build/main.app"
 
-      - name: Clean App
+      - name: Package App
         run: |
-          cd build
-          xattr -cr *
-          cd main.app/Contents/MacOS
-          chmod +x *
+          brew install create-dmg
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -95,3 +92,13 @@ jobs:
             build/*.exe
             build/*.bin
             build/*.app/**/*
+
+      - name: Publish 
+        uses: xresloader/upload-to-github-release@v1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            file: "build/*.app"
+            tag_name: "test"
+            tags: true
+            draft: true
