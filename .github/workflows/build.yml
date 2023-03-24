@@ -95,10 +95,9 @@ jobs:
 
       - name: Publish 
         uses: xresloader/upload-to-github-release@v1
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-            file: "build/*.app"
-            tag_name: "test"
-            tags: true
-            draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          file: "build/*.app"
+          tag_name: "test"
+          tags: true
