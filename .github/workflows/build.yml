@@ -99,5 +99,3 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           file: "build/main.app"
-          tag_name: "test"
-          tags: true
