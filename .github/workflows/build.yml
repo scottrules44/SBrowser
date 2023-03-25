@@ -83,6 +83,7 @@ jobs:
       - name: Package App
         run: |
           brew install create-dmg
+          tar -zcvf build.tar.gz build/
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
@@ -101,4 +102,4 @@ jobs:
             prerelease: true
             title: "Development Build"
             files: |
-              build/main.app
+              build.tar.gz
