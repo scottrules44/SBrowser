@@ -93,9 +93,10 @@ jobs:
             build/*.bin
             build/*.app/**/*
 
-      - name: Publish 
-        uses: xresloader/upload-to-github-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          file: "build/main.app"
+      - name: Upload Release
+        uses: "marvinpinto/action-automatic-releases@latest"
+          with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            prerelease: false
+            files: |
+              build/main.app
