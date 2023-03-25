@@ -95,7 +95,7 @@ jobs:
 
       - name: Upload Release
         uses: "marvinpinto/action-automatic-releases@latest"
-          with:
+        with:
             repo_token: "${{ secrets.GITHUB_TOKEN }}"
             prerelease: false
             files: |
