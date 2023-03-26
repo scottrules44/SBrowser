@@ -79,11 +79,13 @@ jobs:
           # validated by macOS even when an internet connection is not available.
           echo "Attach staple"
           /usr/bin/xattr -rc "build/main.app"
+          
 
       - name: Package App
         run: |
           brew install create-dmg
-          tar -zcvf build.tar.gz build/
+          xattr -cr build/*
+          tar -zcvf build.tar.gz build/main.app
 
       - name: Upload Artifacts
         uses: actions/upload-artifact@v3
