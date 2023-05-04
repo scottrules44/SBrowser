@@ -41,7 +41,7 @@ jobs:
         with:
           nuitka-version: develop
           script-name: main.py
-          enable-plugins: pyqt6
+          enable-plugins: pyside6
           disable-console: true
 
       - name: Codesign executable
