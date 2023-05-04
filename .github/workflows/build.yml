@@ -37,9 +37,9 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build Executable
-        uses: Nuitka/Nuitka-Action@develop
+        uses: Nuitka/Nuitka-Action@main
         with:
-          nuitka-version: main
+          nuitka-version: develop
           script-name: main.py
           enable-plugins: pyqt6
           disable-console: true
