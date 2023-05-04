@@ -37,11 +37,11 @@ jobs:
           pip install -r requirements.txt
 
       - name: Build Executable
-        uses: Nuitka/Nuitka-Action@main
+        uses: Nuitka/Nuitka-Action@develop
         with:
           nuitka-version: main
           script-name: main.py
-          enable-plugins: pyside6
+          enable-plugins: pyqt6
           disable-console: true
 
       - name: Codesign executable
