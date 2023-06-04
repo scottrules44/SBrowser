@@ -43,6 +43,7 @@ jobs:
           script-name: main.py
           enable-plugins: pyside6
           disable-console: true
+          macos-app-icon: ""
 
       - name: Codesign executable
         env: 

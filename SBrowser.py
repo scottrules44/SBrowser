@@ -3,7 +3,7 @@ from PySide6.QtCore import *
 from PySide6.QtGui import *
 from PySide6.QtWebEngineWidgets import *
 import darkdetect
-
+from TabBar import TabBar
 import re
 
 startPage = "https://www.google.com/"
@@ -24,8 +24,12 @@ class SBrowser(QMainWindow):
         self.window.setWindowTitle("SBrowser")
 
         self.layout = QVBoxLayout()
+
         self.toolbar = QHBoxLayout()
-        self.tabbar = QHBoxLayout()
+        self.toolbar.setSpacing(1)
+
+        self.tabBar = TabBar(self)
+        self.tabBar.addTab("Hompage")
 
         self.urlBar = QLineEdit()
         self.urlBar.setMinimumHeight(30)
@@ -63,8 +67,10 @@ class SBrowser(QMainWindow):
         self.fwdButton.setHidden(True)
 
         self.layout.addLayout(self.toolbar)
+        self.layout.addLayout(self.tabBar)
         self.layout.addWidget(self.browser)
-        self.layout.setContentsMargins(5, 1, 5, 5)
+        self.layout.setSpacing(0)
+        self.layout.setContentsMargins(5, 0, 5, 1)
 
         #Keyboard shortcuts
         self.shortcut = QShortcut(QKeySequence("Ctrl+R"), self.window)
@@ -72,13 +78,6 @@ class SBrowser(QMainWindow):
 
         self.shortcut = QShortcut(QKeySequence("Return"), self.window)
         self.shortcut.activated.connect(self.enterButton)
-
-        #Menu bar
-        
-        exit = QAction( 'SomethingElse', self ) #this displays on my system
-        menubar = self.menuBar()
-        fileMenu = menubar.addMenu('&File')
-        fileMenu.addAction(exit)
         
 
         self.window.setLayout(self.layout)
@@ -95,16 +94,15 @@ class SBrowser(QMainWindow):
             self.urlBar.setText(self.browser.page().url().toString())
         else:
             self.urlBar.setText("")
-        
-        print(self.browser.history().canGoBack())
+        self.tabBar.setActiveTabTitle(self.browser.page().title())
         self.backButton.setHidden(not self.browser.history().canGoBack())
         self.fwdButton.setHidden(not self.browser.history().canGoForward())
 
-    def navigate(self, url):
-        if(checkIfUrl(url) and not url.startswith("https")):
+    def navigate(self, url, override=False):
+        if((checkIfUrl(url) and not url.startswith("https")) and override == False):
             url = "https://" + url
             self.urlBar.setText(url)
-        elif not checkIfUrl(url):
+        elif not checkIfUrl(url) and override == False:
             url = "https://google.com/search?q=" + url.replace(" ", "+")
             self.urlBar.setText(url)
         self.browser.setUrl(QUrl(url))
